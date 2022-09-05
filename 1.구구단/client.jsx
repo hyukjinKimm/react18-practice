@@ -1,4 +1,5 @@
 const React = require('react');
 const ReactDom = require('react-dom')
 
-ReactDom.render(<GuGudan />) 
+const WordRealy = require('./WordRelay');
+ReactDom.render(<WordRealy />, document.querySelector('#root')) 
