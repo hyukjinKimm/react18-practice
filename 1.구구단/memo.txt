@@ -8,3 +8,4 @@
 7. setState 실행시 render 가 실행된다.
 8. JSX 에서는 className, htmlFor
 9. 함수 컴포넌트에서 setValue, setResult 등등 여러개가 한번에 발생해도 render 는 한번만 일어난다.
+10. JSX 문법을 쓴다면 파일 확장라를 jsx 로 하자 
