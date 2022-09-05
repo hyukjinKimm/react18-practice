@@ -1,3 +1,5 @@
 1. JSX 컴포넌트는 대문자로 시작해야 한다.
 2. JSX 안에서 자바스크립트 코드는 중괄호로 감싸줘야 한다.
 3. render 안의 return 의 최후방 태그는 꼭 하나여야 한다.
+4. this.state.liked = true 안됨.
+5. onSubmit, onClick 등 함수를 따로 만들어서 쓸때는 화살표 함수로 만들자
