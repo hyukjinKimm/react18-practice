@@ -9,7 +9,17 @@ module.exports = {
   },
   entry: { // 입력
     //app: ['./client.jsx', './WordRealy.jsx'] // 합칠 파일들
-    app: ['./client'] // client.jsx 에서 WordRealy 를 불러오고 있다, 확장자
+    app: ['./client'] // client.jsx 에서 WordRealy 를 불러오고 있다.
+  }, 
+  module :{ // entry 에 있는 파일을 읽어서 module 을 적용하고 output 으로 빼는것
+    rules: [{
+      test: /\.jsx?/, // js 파일과 jsx 파일에 rule 을 적용하겠다.
+      loader: 'babel-loader', // 적용할 룰
+      options: { // 바벨 로더에 대한 옵션
+        presets: ['@babel/preset-env', '@babel/preset-react'],
+        plugins: [],
+      }
+    }]
   }, 
   output: { // 출력
     path: path.join(__dirname, 'dist'),

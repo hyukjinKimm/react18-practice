@@ -1,2 +1,6 @@
 1. npm i react react-dom
-2. npm i -D webpack webpack=cli
+2. npm i -D webpack webpack-cli
+3. npm i -D @babel/core @babel/preset-env @babel/preset-react
+ @babel/preset-env 는 브라우저 환경에 맞춰서 최신문법을 예전 문법으로 바꿔주는 패키지
+ @babel/preset-react 가 있어서 JSX 지원 가능
+3. webpack.config.js 작성
