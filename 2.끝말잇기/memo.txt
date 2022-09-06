@@ -1,0 +1,1 @@
+1. input 태그안에 value 와 onChange 를 세트로 넣을게 아니면 defaultValue 를 넣어줘야한다.
