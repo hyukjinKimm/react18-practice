@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   name: 'word-realy-setting', // 어떤 것에 대한 설정인지?
@@ -14,13 +15,22 @@ module.exports = {
   module :{ // entry 에 있는 파일을 읽어서 module 을 적용하고 output 으로 빼는것
     rules: [{
       test: /\.jsx?/, // js 파일과 jsx 파일에 rule 을 적용하겠다.
-      loader: 'babel-loader', // 적용할 룰
+      loader: 'babel-loader', // 엔트리에 들어간 파일들에 babel-loader 를 적용
       options: { // 바벨 로더에 대한 옵션
-        presets: ['@babel/preset-env', '@babel/preset-react'],
+        presets: [['@babel/preset-env', { // @babel/preset-env 에 대한 설정
+          targets: { // 지원할 브라우저 
+            browsers: ['> 5% in KR', 'last 2 chrome version'], // browerslist
+          },
+          debug: true // 개발용
+        }],
+         '@babel/preset-react'],
         plugins: [],
       }
     }]
   }, 
+  plugins: [// 추가적인 기능을 원할 때
+    new webpack.LoaderOptionsPlugin({ debug: true }) // loader 의 options 에 debug : true 를 다 넣어준다.
+  ], 
   output: { // 출력
     path: path.join(__dirname, 'dist'),
     filename: 'app.js'

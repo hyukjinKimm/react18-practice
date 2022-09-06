@@ -1,6 +1,9 @@
 1. npm i react react-dom
 2. npm i -D webpack webpack-cli
-3. npm i -D @babel/core @babel/preset-env @babel/preset-react
+3. npm i -D @babel/core @babel/preset-env @babel/preset-react babel-loader
  @babel/preset-env 는 브라우저 환경에 맞춰서 최신문법을 예전 문법으로 바꿔주는 패키지
  @babel/preset-react 가 있어서 JSX 지원 가능
+ babel-loader 는 바벨과 웹펙을 연결해준다.
 3. webpack.config.js 작성
+4. babel/preset-env 에 대한 옵션도 따로 줄 수 있다.
+presets = plugin 들의 모음
