@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-
+const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 module.exports = {
   name: 'word-realy-setting', // 어떤 것에 대한 설정인지?
   mode: 'development', // 실서비스일때는 hidden-source-map
@@ -24,17 +24,23 @@ module.exports = {
           debug: true // 개발용
         }],
          '@babel/preset-react'],
-        plugins: [],
+        plugins: ['react-refresh/babel'],
       }
     }]
   }, 
   plugins: [// 추가적인 기능을 원할 때
-    new webpack.LoaderOptionsPlugin({ debug: true }) // loader 의 options 에 debug : true 를 다 넣어준다.
+    new webpack.LoaderOptionsPlugin({ debug: true }), // loader 의 options 에 debug : true 를 다 넣어준다.
+    new RefreshWebpackPlugin()
   ], 
   output: { // 출력
-    path: path.join(__dirname, 'dist'),
-    filename: 'app.js'
+    path: path.join(__dirname, 'dist'), // 실제경로 
+    filename: 'app.js',
+    publicPath: '/dist/', // webpack -devServer 가 사용하는 결과물 간의 가상경로..
+  },
+  devServer : {
+    devMiddleware: { publicPath: '/dist/'},
+    static: { directory: path.resolve(__dirname )},
+    hot: true, 
   }
-
 
 }

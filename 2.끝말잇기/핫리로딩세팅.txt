@@ -1,0 +1,11 @@
+1. npm i  -D react-refresh @pmmmwh/react-refresh-webpack-plugin
+2. npm i -D webpack-dev-server
+3. package.json 에  "dev": "webpack serve --env development" 스크립트 추가
+4. webpack.config.js 에 const RefreshWebpackPlugin = reuqire('@pmmmwh/react-refresh-webpack-plugin') 추가
+5. webpack.config.js 에 const RefreshWebpackPlugin 를 plugins 에 추가
+6. babel-loader 의 options 안에 plugins: ['react-refresh/babel'], 추가
+7. webpack.config.js 에서 output 속성안에     publicPath: '/dist/' 추가
+8. webpack.config.js 에 devServer 속성 추가
+derServer 안에 속성들
+    1.  devMiddleware 는 output 의 publicPath 를 그대로 친다. (가상 메모리의 주소)
+    2.  static 정적 파일들이 존재하는 주소... (index.html이 src 폴더에 있으면 static: { directory: path.resolve(__dirname, 'src' )}) 등 으로 적는다
