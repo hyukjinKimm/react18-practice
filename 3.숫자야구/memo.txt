@@ -1,0 +1,10 @@
+export default NumberBaseball // import NumberBaseball from 파일명
+	한번만 쓸수있음
+export const hello = 'hello' // import  { hello } from 파일명
+export const hello = 'hello' // import  { hello } from 파일명
+	여러개를 쓸 수 잇음.
+
+위에 두개를 합치면 
+import NumberBaseball,  { hello } from 파일명
+
+module.exports = export defulat 이다
