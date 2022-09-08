@@ -1,20 +1,26 @@
-/* import React, { memo } from 'react'
- */
+import React, { memo, useState } from 'react'
 
-/* const Try = memo((props) => {
+
+const Try = memo((props) => {
   console.log('try렌더링')
+  const [result, setResult] = useState(props.tryInfo);
+
+  const onClick = (e) => {
+    setResult({value:'바보', result: 'result'})
+  }
   return (
     <React.Fragment>
     <li>
-    <div>{props.tryInfo.value}</div>
-    <div>{props.tryInfo.result}</div>
+    <div onClick={onClick}>{result.value}</div>
+    <div>{result.result}</div>
     </li>
    </React.Fragment>
   )
 });
-Try.displayName = 'Try' */
+Try.displayName = 'Try'
 
-import React, { PureComponent } from 'react'
+
+/* import React, { PureComponent } from 'react'
 class Try extends PureComponent {
   render(){
     console.log('try 렌더링')
@@ -28,5 +34,5 @@ class Try extends PureComponent {
     )
   }
 }
-
+ */
 export default Try
