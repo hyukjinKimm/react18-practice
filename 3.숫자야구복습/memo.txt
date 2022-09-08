@@ -1,3 +1,24 @@
 1. this.setState 호출시 render 가 자동호출
 2. shouldComponentUpdate 를 사용 가능
 3. PureComponent 는 shouldComponentUpdate 가 구현되어 있는것.
+
+
+컴포넌트가 리렌더링 되는 경우
+1. props 가 바뀜
+2. state 가 바귐
+3. 부모컴포넌트가 리렌더링 됨
+
+부모가 리렌더링됐다고 자식이 리렌더링 되는건 억울함
+PureComponet 리렌더링 이유
+  1. state 가 달졌을때 
+  2. props 가 달라졌을때  
+  (부모컴포넌트가 리렌더링 되었다고 다시 렌더링되는걸 막아줌)
+
+함수컴포넌트에 PureComponent 를 적용할려면 memo 사용 
+-> 부모컴포넌트가 리렌더링 될때 자식이 리렌더링 되는걸 막아줌 
+     여전히 state 나 props 가 바귀면 리렌더링 됨
+
+함수컴포넌트에서는 Try.displayName 으로 보여지는 이름 설정 가능
+
+Component 를 사용하는건 특정 state 에 따라 
+렌더링 하고 말고를 커스터마이징 할때도 사용 할 수 있다.

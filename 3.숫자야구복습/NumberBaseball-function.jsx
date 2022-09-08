@@ -15,7 +15,7 @@ function getNumbers() {
 const NumberBaseball = () => {
   const [value, setValue] = React.useState('')
   const [result, setResult] = React.useState('')
-  const [numbers, setNumbers] = React.useState(getNumbers)
+  const [numbers, setNumbers] = React.useState(getNumbers) 
   const [tries, setTries] = React.useState([])
   const inputRef = React.useRef(null)
 
