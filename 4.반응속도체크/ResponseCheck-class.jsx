@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-
+import Average from './Average';
 class ResponseCheck extends PureComponent {
   state = {
     state: 'waiting',
@@ -45,12 +45,26 @@ class ResponseCheck extends PureComponent {
     }
   }
  
-  renderAverage = () => {
+  onReset = () => {
+    clearTimeout(this.timeout)
+    this.setState({
+        state: 'waiting',
+        message: '클릭해서 시작하세요!',
+        result: []
+    })
+  }
+/*   renderAverage = () => {
     const { result } = this.state
     return (
-        result.length ? <div>평균시간: {result.reduce((a,c) => a+c,0) / result.length}ms</div>: null
+        result.length ? 
+        <React.Fragment>
+          <div>
+            평균시간: {result.reduce((a,c) => a+c,0) / result.length}ms
+          </div>
+          <button onClick={this.onReset}>리셋</button>
+        </React.Fragment>: null
     )
-  }
+  } */
   render(){
     const { state, message } = this.state
     return(
@@ -62,7 +76,7 @@ class ResponseCheck extends PureComponent {
         >
           {message}
         </div>
-        {this.renderAverage()}
+        <Average result={this.state.result}/>
     
  
       </React.Fragment>
