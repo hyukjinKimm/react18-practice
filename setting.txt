@@ -1,3 +1,6 @@
-1. npm i react react-dom
-2. npm i -D webpack webpack-cli
-3. npm i -D @babel/core @babel/preset-env @babel/preset-react babel-loader
+npm i react react-dom
+npm i -D webpack webpack-cli
+npm i -D @babel/core @babel/preset-env @babel/preset-react babel-loader
+npm i  -D react-refresh @pmmmwh/react-refresh-webpack-plugin
+npm i -D webpack-dev-server
+3. package.json 에  "dev": "webpack serve --env development" 스크립트 추가
