@@ -77,8 +77,6 @@ class ResponseCheck extends PureComponent {
           {message}
         </div>
         <Average result={this.state.result}/>
-    
- 
       </React.Fragment>
     )
   }

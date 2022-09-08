@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react'
 
-
 class Average extends PureComponent {
-
 
   render(){
     console.log('pure렌더')
