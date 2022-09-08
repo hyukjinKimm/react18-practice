@@ -1,20 +1,16 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
-class Test extends Component {
+class Test extends PureComponent {
 
   state={
     counter: 0,
+    array: []
   }
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    if(this.state.counter !== nextState.counter){
-        return true
-    } else{
-        return false
-    }
-  }
-
+  
   onClick = () => {
-    this.setState({});
+    this.setState({
+      array: []
+    });
   }
 
   render(){

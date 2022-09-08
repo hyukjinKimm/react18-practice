@@ -1,0 +1,3 @@
+1. this.setState 호출시 render 가 자동호출
+2. shouldComponentUpdate 를 사용 가능
+3. PureComponent 는 shouldComponentUpdate 가 구현되어 있는것.
