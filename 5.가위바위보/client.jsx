@@ -1,5 +1,5 @@
 const React = require('react')
-import RSP from './RSP-class';
+import RSP from './RSP-function';
 
 import { createRoot } from 'react-dom/client';
 const container = document.getElementById('root');
