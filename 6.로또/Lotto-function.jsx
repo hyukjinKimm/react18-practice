@@ -18,18 +18,22 @@ const Lotto = () => {
   const [redo, setRedo] = useState(false)
   const timeouts = useRef([])
 
-  useEffect(()=>{
+  const runTimeouts = () => {
     for(let i = 0; i < winNumbers.length - 1; i ++){
-        timeouts.current[i] = setTimeout(() => {
-          setWinBalls((preWinBalls) => {
-            return [...preWinBalls, winNumbers[i]]
-          })
-        }, (i + 1) *  1000);
-      }
-      timeouts.current[6] =setTimeout(() => {
-        setBonus(winNumbers[6])
-        setRedo(true)
-      }, 7000);
+      timeouts.current[i] = setTimeout(() => {
+        setWinBalls((preWinBalls) => {
+          return [...preWinBalls, winNumbers[i]]
+        })
+      }, (i + 1) *  1000);
+    }
+    timeouts.current[6] =setTimeout(() => {
+      setBonus(winNumbers[6])
+      setRedo(true)
+    }, 7000);
+  }
+  useEffect(()=>{
+    console.log('useEffect')
+    runTimeouts()
   },[timeouts.current])
   const onClickRedo = () => {
     setWinNumbers(getWinNumbers())
