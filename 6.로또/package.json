@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "webpack serve --env development"
+    "dev": "webpack serve --env development"
   },
   "author": "hyukjinKimm",
   "license": "ISC",

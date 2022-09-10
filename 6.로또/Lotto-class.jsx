@@ -18,6 +18,31 @@ class Lotto extends PureComponent{
     bonus: null,
     redo: false,
   }
+  timeouts = []
+  componentDidMount(){ 
+    const {winNumbers} = this.state
+    for(let i = 0; i < winNumbers.length - 1; i ++){
+      console.log('hi')
+      this.timeouts[i] = setTimeout(() => {
+        this.setState((preState) => {
+          return {
+            winBalls: [...preState.winBalls, this.state.winNumbers[i]]
+          }
+        })
+      }, (i + 1) *  1000);
+    }
+    this.timeouts[6] =setTimeout(() => {
+      this.setState({
+        bonus: winNumbers[6],
+        redo: true
+      })
+    }, 7000);
+  }
+  componentWillUnmount(){
+    this.timeouts.forEach((v) => {
+        clearTimeout(v)
+    })
+  }
   render(){
     const { winBalls, bonus, redo } = this.state;
     return(
