@@ -1,5 +1,5 @@
 const React = require('react')
-import Lotto from './Lotto-class';
+import Lotto from './Lotto-function';
 
 import { createRoot } from 'react-dom/client';
 const container = document.getElementById('root');
