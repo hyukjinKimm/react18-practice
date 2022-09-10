@@ -1,0 +1,8 @@
+useCallback 안에서 state 를 사용할때는 
+맨 처음생성될때의 state 를  기억함으로 
+두번째 인자인 배열안에 그 state 이름을 넣어준다
+
+자식컴포넌트에 함수를 전달할때는 무조건 useCallback 을 사용해서 넘겨야 한다 .
+그래야 자식컴포넌트가 쓸대없이 랜더링 되지 않는다
+
+const number = useMemo(함수, [추적할 state])
