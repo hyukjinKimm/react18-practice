@@ -12,9 +12,9 @@ function getWinNumbers() {
     return [...winNumbers, bonusNumber];
   }
 const Lotto = () => {
-  const [winBalls, setWinBalls] = useState([]);
   const lottonumbers = useMemo(() => getWinNumbers(), [])
   const [winNumbers, setWinNumbers] = useState(lottonumbers);
+  const [winBalls, setWinBalls] = useState([]);
   //const [winNumbers, setWinNumbers] = useState(getWinNumbers);
 
   const [bonus, setBonus] = useState(null)

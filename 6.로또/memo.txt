@@ -6,3 +6,5 @@ useCallback 안에서 state 를 사용할때는
 그래야 자식컴포넌트가 쓸대없이 랜더링 되지 않는다
 
 const number = useMemo(함수, [추적할 state])
+
+훅스는 조건문과 useEffec, useRef 등등  안에 넣으면 안된다.
