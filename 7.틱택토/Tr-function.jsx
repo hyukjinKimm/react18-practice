@@ -1,11 +1,13 @@
 import React, { memo } from "react";
 import Td from './Td-function'
 
-const Tr = memo(() => {
+const Tr = memo(({ rowData }) => {
 
   return(
     <React.Fragment>
-      <Td>{''}</Td>
+      <tr>
+        {Array(rowData.length).fill().map((v) => <Td />)}
+      </tr>
   </React.Fragment>
   )
 })
