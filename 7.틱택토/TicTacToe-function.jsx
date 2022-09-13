@@ -100,7 +100,7 @@ const TicTacToe = memo(() => {
   }, [recentCell]);
   return(
     <React.Fragment>
-      <Table tableData={state.tableData} dispatch={dispatch}/>
+      <Table tableData={  state.tableData} dispatch={dispatch}/>
       {state.winner && <div>{state.winner}님의 승리</div>}
     </React.Fragment>
   )

@@ -1,11 +1,10 @@
 import React, { memo } from "react";
 import Tr from './Tr-function'
 
-const Table = memo(({ onClick, tableData, dispatch } ) => {
-  console.log('table renderd')
+const Table = memo(({tableData, dispatch } ) => {
   return(
     <React.Fragment>
-      <table onClick={onClick}>
+      <table>
         <tbody>
           {Array(tableData.length).fill().map((v, i) => (<Tr key={i} dispatch={dispatch} rowIndex ={i} rowData={tableData[i]}/>))}
         </tbody>
