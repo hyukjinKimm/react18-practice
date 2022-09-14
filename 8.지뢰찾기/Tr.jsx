@@ -6,7 +6,7 @@ const Tr = memo(({ rowIndex }) => {
   return(
     <React.Fragment>
       <tr>
-        {tableData[0] && Array(tableData[0].length).fill().map((td, i) => <Td rowIndex={rowIndex} cellIndex={i}/>)}
+        {tableData[0] && Array(tableData[0].length).fill().map((td, i) => <Td key={i} rowIndex={rowIndex} cellIndex={i}/>)}
       </tr>
     </React.Fragment>
   )

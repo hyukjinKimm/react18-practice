@@ -7,7 +7,7 @@ const Table = memo(() => {
     <React.Fragment>
       <table>
         <tbody>
-          {Array(tableData.length).fill().map((tr, i) => <Tr rowIndex={i}/>)}
+          {Array(tableData.length).fill().map((tr, i) => <Tr key={i} rowIndex={i}/>)}
         </tbody>
       </table>
     </React.Fragment>
