@@ -1,12 +1,13 @@
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
+import { TableContext } from "./MineSearch";
 import Tr from './Tr'
 const Table = memo(() => {
-
+  const { tableData } = useContext(TableContext)
   return(
     <React.Fragment>
       <table>
         <tbody>
-          <Tr />
+          {Array(tableData.length).fill().map((tr, i) => <Tr rowIndex={i}/>)}
         </tbody>
       </table>
     </React.Fragment>

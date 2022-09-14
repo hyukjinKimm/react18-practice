@@ -11,6 +11,7 @@ export const CODE = {
   CLICKED_MINE: -6,
   OPENED: 0
 }
+
 export const TableContext = createContext({
   tableData: [],
   dispatch: () => {}
@@ -20,7 +21,41 @@ const initialState = {
   timer: 0,
   result: ''
 }
-export const START_GAME = 'START_GAME'
+const plantMine = (row, cell, mine) => {
+    console.log(row, cell, mine);
+    const candidate = Array(row * cell).fill().map((arr, i) => {
+      return i;
+    });
+    const shuffle = [];
+    while (candidate.length > row * cell - mine) {
+      const chosen = candidate.splice(Math.floor(Math.random() * candidate.length), 1)[0];
+      shuffle.push(chosen);
+    }
+    const data = [];
+    for (let i = 0; i < row; i++) {
+      const rowData = [];
+      data.push(rowData);
+      for (let j = 0; j < cell; j++) {
+        rowData.push(CODE.NORMAL);
+      }
+    }
+  
+    for (let k = 0; k < shuffle.length; k++) {
+      const ver = Math.floor(shuffle[k] / cell);
+      const hor = shuffle[k] % cell;
+      data[ver][hor] = CODE.MINE;
+    }
+  
+    console.log(data);
+    return data;
+  };
+  export const START_GAME = 'START_GAME';
+  export const OPEN_CELL = 'OPEN_CELL';
+  export const CLICK_MINE = 'CLICK_MINE';
+  export const FLAG_CELL = 'FLAG_CELL';
+  export const QUESTION_CELL = 'QUESTION_CELL';
+  export const NORMALIZE_CELL = 'NORMALIZE_CELL';
+  export const INCREMENT_TIMER = 'INCREMENT_TIMER';
 const reducer = (state, action) => {
   switch(action.type) {
     case START_GAME: {
@@ -33,10 +68,11 @@ const reducer = (state, action) => {
         return state
   }
 }
+
 const MineSearch = memo(() => {
   const [state, dispatch] = useReducer(reducer,  initialState)
   const { timer, result, tableData } = state
-  const value = useMemo(() => {tableData: tableData, dispatch}, [tableData])
+  const value = useMemo(() => ({tableData, dispatch}), [tableData])
   return(
     <TableContext.Provider value={value}>
       <Form />
