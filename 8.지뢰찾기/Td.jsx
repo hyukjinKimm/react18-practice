@@ -3,7 +3,6 @@ import { CLICK_MINE, CODE, FLAG_CELL, NORMALIZE_CELL, OPEN_CELL, QUESTION_CELL, 
 
 const Td = memo(({ rowIndex, cellIndex }) => {
   const { tableData, dispatch, halted } = useContext(TableContext)
-
   const getTdStyle = (code) => {
     switch (code) {
       case CODE.NORMAL:
@@ -34,7 +33,6 @@ const Td = memo(({ rowIndex, cellIndex }) => {
   };
   
   const getTdText = (code) => {
-    console.log('getTdtext');
     switch (code) {
       case CODE.NORMAL:
         return '';
