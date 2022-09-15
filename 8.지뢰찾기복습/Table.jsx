@@ -1,8 +1,9 @@
 import React, { memo, useContext } from "react";
 import { TableContext } from "./MineSearch";
 import Tr from './Tr'
+
 const Table = memo(() => {
-  const { tableData, dispatch } = useContext(TableContext)
+  const { tableData } = useContext(TableContext);
   return(
     <React.Fragment>
       <table>
@@ -13,5 +14,4 @@ const Table = memo(() => {
     </React.Fragment>
   )
 })
-
 export default Table
