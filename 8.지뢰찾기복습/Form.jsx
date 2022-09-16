@@ -20,6 +20,7 @@ const Form = memo(() => {
   }, [])
 
   const onClickBtn = useCallback((e) => {
+
     dispatch({type: GAME_START, row: row, cell: cell, mine: mine});
   }, [row, cell, mine])
   return(

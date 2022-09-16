@@ -1,6 +1,7 @@
-import React, { memo, useMemo, useReducer, createContext } from "react";
+import React, { memo, useMemo, useReducer, createContext, useEffect } from "react";
 import Table from "./Table";
 import Form from "./Form"
+
 export const CODE = {
     MINE: -7,
     NORMAL: -1,
@@ -42,10 +43,19 @@ const plantMine = (row, cell, mine) => {
 const reducer = (state, action) => {
   switch(action.type) {
     case GAME_START: {
+
       return {
         ...state,
         tableData: plantMine(action.row, action.cell, action.mine),
-        halted: false
+        halted: false,
+        data: {
+          row: action.row,
+          cell: action.cell,
+          mine: +action.mine
+        },
+        opendCount: 0,
+        timer: 0,
+        result: ''
       }
     }
     case OPEN_CELL: {
@@ -54,7 +64,7 @@ const reducer = (state, action) => {
         tableData[i] = [...state.tableData[i]]
       })
       const checked = []
-      const count = 0
+      let opendCount = 0
       const checkAround = (row, cell) => {
         
         if (cell < 0 || cell  >= tableData[0].length){
@@ -111,14 +121,26 @@ const reducer = (state, action) => {
 
             })
         }
+        opendCount += 1
         tableData[row][cell] = count
   
       }
       checkAround(action.row, action.cell)
-
+  
+      console.log(state.opendCount)
+ 
+      let halted = false;
+      let result = ''
+      if (state.data.row * state.data.cell - state.data.mine === state.opendCount + opendCount){
+        halted = true 
+        result = `승리하셨습니다.`
+      }
       return{
         ...state,
-        tableData
+        tableData,
+        opendCount: state.opendCount + opendCount,
+        halted,
+        result
       }
     }
     case CLICK_MINE: {
@@ -170,6 +192,13 @@ const reducer = (state, action) => {
             tableData,
           }   
     }
+    case INCREMENT_TIMER: {
+    
+      return {
+        ...state,
+        timer: state.timer + 1
+      }
+    }
   }
 }
 export const TableContext = createContext({
@@ -178,7 +207,14 @@ export const TableContext = createContext({
 const initialState = {
   tableData: [],
   timer: 0,
-  halted: true
+  halted: true,
+  opendCount: 0,
+  data: {
+    row: 0,
+    cell: 0,
+    mine: 0
+  },
+  result: ''
 }
 export const GAME_START = "GAME_START"
 export const OPEN_CELL = "OPEN_CELL"
@@ -186,16 +222,26 @@ export const CLICK_MINE = "CLICK_MINE"
 export const FLAG_CELL = "FLAG_CELL"
 export const QUESTION_CELL = "QUESTION_CELL"
 export const NORMALIZE_CELL = "NORMALIZE_CELL"
-
+export const INCREMENT_TIMER = "INCREMENT_TIMER"
 const MineSearch = memo(() => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const { tableData, timer, halted } = state
+  const { tableData, timer, halted, result } = state
   const value = useMemo(() => ({ tableData, dispatch, halted }), [tableData, halted])
+  useEffect(() => {
+    let timer;
+    if (halted === false){
+      timer = setInterval(() => {dispatch({type: INCREMENT_TIMER})}, 1000)
+    }
+    return () => {
+      clearInterval(timer)
+    }
+  }, [halted])
   return(
     <TableContext.Provider value={value}>
       <Form />
       <Table />
       <div>{timer}</div>
+      <div>{result}</div>
     </TableContext.Provider>
   )
 })
