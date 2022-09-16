@@ -6,7 +6,6 @@ const Td = memo(({ rowIndex, cellIndex }) => {
 
   const { tableData, dispatch, halted } = useContext(TableContext)
   const getTdStyle = useCallback((code) => {
-    console.log('getTdStyle')
     switch (code) {
         case CODE.NORMAL:
         case CODE.MINE:
