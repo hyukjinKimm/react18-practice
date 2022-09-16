@@ -1,5 +1,5 @@
 import React, { memo, useContext, useCallback, useMemo } from "react";
-import { TableContext, CODE, OPEN_CELL, CLICK_MINE } from "./MineSearch";
+import { TableContext, CODE, OPEN_CELL, CLICK_MINE, FLAG_CELL, QUESTION_CELL, NORMALIZE_CELL } from "./MineSearch";
 
 const Td = memo(({ rowIndex, cellIndex }) => {
 
@@ -59,6 +59,7 @@ const Td = memo(({ rowIndex, cellIndex }) => {
         case CODE.NORMAL:
         case CODE.FLAG:
         case CODE.QUESTION:
+          
           dispatch({type: OPEN_CELL, row: rowIndex, cell: cellIndex})
           return;
         case CODE.MINE:
@@ -70,11 +71,35 @@ const Td = memo(({ rowIndex, cellIndex }) => {
           return;
       }
   }, [tableData[rowIndex][cellIndex], halted])
+  const onRightClickTd = useCallback((e) => {
+    e.preventDefault();
+
+    if (halted) {
+      return;
+    }
+    switch (tableData[rowIndex][cellIndex]) {
+      case CODE.NORMAL:
+      case CODE.MINE:
+        dispatch({ type: FLAG_CELL, row: rowIndex, cell: cellIndex });
+        return;
+      case CODE.FLAG_MINE:
+      case CODE.FLAG:
+        dispatch({ type: QUESTION_CELL, row: rowIndex, cell: cellIndex });
+        return;
+      case CODE.QUESTION_MINE:
+      case CODE.QUESTION:
+        dispatch({ type: NORMALIZE_CELL, row: rowIndex, cell: cellIndex });
+        return;
+      default:
+        return;
+    }
+  }, [tableData[rowIndex][cellIndex], halted]);
   return useMemo(() => (    
   <React.Fragment>
     <td
       style={getTdStyle(tableData[rowIndex][cellIndex])}
       onClick={onClickTd}
+      onContextMenu={onRightClickTd}
     >{getTdText(tableData[rowIndex][cellIndex])}</td>
   </React.Fragment>
   ), [tableData[rowIndex][cellIndex]])

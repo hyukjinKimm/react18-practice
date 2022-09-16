@@ -12,7 +12,7 @@ export const CODE = {
     OPENED: 0
 }
 const plantMine = (row, cell, mine) => {
-    console.log(row, cell, mine);
+    
     const candidate = Array(row * cell).fill().map((arr, i) => {
       return i;
     });
@@ -36,7 +36,7 @@ const plantMine = (row, cell, mine) => {
       data[ver][hor] = CODE.MINE;
     }
   
-    console.log(data);
+  
     return data;
   };
 const initialState = {
@@ -77,6 +77,9 @@ const reducer = (state, action) => {
             if (cell < 0 || cell > tableData[0].length - 1 ){
               return ;
             }
+            if ([CODE.FLAG, CODE.QUESTION].includes(tableData[row][cell])){
+              return;
+            }
             if (checked.includes(row+'/'+cell)){
                 return;
             }else{
@@ -94,7 +97,7 @@ const reducer = (state, action) => {
             around =  around.concat(tableData[row][cell - 1], tableData[row][cell + 1])
           
             if (row < tableData.length - 1){ 
-                console.log(row)
+               
                 around = around.concat(
                     tableData[row + 1][cell -1],
                     tableData[row + 1][cell],
@@ -121,7 +124,7 @@ const reducer = (state, action) => {
                 near.push( [row + 1, cell])
                 near.push( [row + 1, cell + 1])
               }
-              console.log('near: ', near)
+              
               near.forEach((v) => {
                 checkAround(v[0], v[1])
               })
@@ -165,6 +168,45 @@ const reducer = (state, action) => {
             timer: state.timer + 1
         }
     }
+    case FLAG_CELL: {
+      const tableData = [...state.tableData]
+      tableData[action.row] = [...state.tableData[action.row]]
+      if (tableData[action.row][action.cell] === CODE.MINE){
+        tableData[action.row][action.cell] = CODE.FLAG_MINE
+      } else {
+        tableData[action.row][action.cell] = CODE.FLAG       
+      }
+      return{
+        ...state,
+        tableData,
+      }
+    }
+    case QUESTION_CELL: {
+      const tableData = [...state.tableData]
+      tableData[action.row] = [...state.tableData[action.row]]
+      if (tableData[action.row][action.cell] === CODE.FLAG_MINE){
+        tableData[action.row][action.cell] = CODE.QUESTION_MINE
+      } else {
+        tableData[action.row][action.cell] = CODE.QUESTION       
+      }
+      return{
+        ...state,
+        tableData,
+      }
+    }
+    case NORMALIZE_CELL: {
+      const tableData = [...state.tableData]
+      tableData[action.row] = [...state.tableData[action.row]]
+      if (tableData[action.row][action.cell] === CODE.QUESTION_MINE){
+        tableData[action.row][action.cell] = CODE.MINE
+      } else {
+        tableData[action.row][action.cell] = CODE.NORMAL      
+      }
+      return{
+        ...state,
+        tableData,
+      }
+    }
   }
 
 }
@@ -173,6 +215,10 @@ export const GAME_START = "GAME_START"
 export const OPEN_CELL = "OPEN_CELL"
 export const CLICK_MINE = "CLICK_MINE"
 export const INCREMENT_TIMER = "INCREMENT_TIMER"
+export const FLAG_CELL = "FLAG_CELL"
+export const QUESTION_CELL = "QUESTION_CELL"
+export const NORMALIZE_CELL = "NORMALIZE_CELL"
+
 const MineSearch = memo(() => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const { tableData, timer, halted, result } =  state
