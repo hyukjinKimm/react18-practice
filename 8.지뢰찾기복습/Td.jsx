@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useContext } from "react";
+import React, { memo, useCallback, useContext, useMemo } from "react";
 import { CLICK_MINE } from "./MineSearch";
 import { TableContext, CODE, OPEN_CELL, FLAG_CELL, QUESTION_CELL, NORMALIZE_CELL } from "./MineSearch";
 
@@ -6,6 +6,7 @@ const Td = memo(({ rowIndex, cellIndex }) => {
 
   const { tableData, dispatch, halted } = useContext(TableContext)
   const getTdStyle = useCallback((code) => {
+    console.log('getTdStyle')
     switch (code) {
         case CODE.NORMAL:
         case CODE.MINE:
@@ -93,7 +94,7 @@ const Td = memo(({ rowIndex, cellIndex }) => {
         return;
     }
   }, [tableData[rowIndex][cellIndex], halted]);
-  return(
+  return useMemo(() => ((
     <React.Fragment>
     <td
       style={getTdStyle(tableData[rowIndex][cellIndex])}
@@ -103,6 +104,6 @@ const Td = memo(({ rowIndex, cellIndex }) => {
       {getTdText(tableData[rowIndex][cellIndex])}
     </td>
     </React.Fragment>
-  )
+  )), [tableData[rowIndex][cellIndex]])
 })
 export default Td
