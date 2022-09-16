@@ -54,23 +54,25 @@ const reducer = (state, action) => {
         tableData[i] = [...state.tableData[i]]
       })
       const checked = []
+      const count = 0
       const checkAround = (row, cell) => {
         
         if (cell < 0 || cell  >= tableData[0].length){
       
           return;
         }
-        if ([CODE.OPENED, CODE.FLAG, CODE.FLAG_MINE, CODE.QUESTION, CODE.QUESTION_MINE].includes(tableData[row][cell])){
+        if ([CODE.FLAG, CODE.QUESTION].includes(tableData[row][cell])){
             return;
         }
 
-        let around = []
+
 
         if (checked.includes(row+'/'+cell)){
             return;
         } else{
             checked.push(row+'/'+cell)
         }
+        let around = []
         if (row > 0){
             around = around.concat(
                 tableData[row - 1][cell-1], 
@@ -102,7 +104,6 @@ const reducer = (state, action) => {
                 near.push([row + 1, cell])
                 near.push([row + 1, cell + 1])           
             }
-            console.log(near)
             near.forEach((n) => {
               if (tableData[n[0]][n[1]] !== CODE.OPENED){
                 checkAround(n[0], n[1])

@@ -1,4 +1,4 @@
-import React, { memo, useReducer, createContext, useMemo } from "react";
+import React, { memo, useReducer, createContext, useMemo, useEffect } from "react";
 import Table from './Table'
 import Form from './Form'
 export const CODE = {
@@ -19,9 +19,15 @@ export const TableContext = createContext({
 });
 const initialState = {
   tableData: [],
+  data: {
+    row: 0,
+    cell: 0,
+    mine: 0
+  },
   timer: 0,
   result: '',
-  halted: true
+  halted: true,
+  opendCount: 0
 }
 const plantMine = (row, cell, mine) => {
     console.log(row, cell, mine);
@@ -63,8 +69,15 @@ const reducer = (state, action) => {
     case START_GAME: {
       return {
         ...state,
+        data: {
+          row: action.row,
+          cell: action.cell,
+          mine: action.mine
+        },
+        opendCount: 0,
         tableData: plantMine(action.row, action.cell, action.mine),
-        halted: false
+        halted: false,
+        timer: 0
       }
     }
     case OPEN_CELL: {
@@ -73,6 +86,7 @@ const reducer = (state, action) => {
         tableData[i] = [...state.tableData[i]]
       })
       const checked = [];
+      let openedCount = 0
       console.log(tableData.length, tableData[0].length);
       const checkAround = (row, cell) => {
         console.log(row, cell);
@@ -87,6 +101,7 @@ const reducer = (state, action) => {
         } else {
           checked.push(row + '/' + cell);
         } // 한 번 연칸은 무시하기
+
         let around = [
           tableData[row][cell - 1], tableData[row][cell + 1],
         ];
@@ -120,12 +135,26 @@ const reducer = (state, action) => {
             })
           
         }
+        if ( tableData[row][cell] === CODE.NORMAL){
+          openedCount += 1
+        }
+
         tableData[row][cell] = count;
       }
       checkAround(action.row, action.cell)
+      let halted = false;
+      let result = ''
+      
+      if(state.data.row * state.data.cell - state.data.mine === state.opendCount + openedCount){
+        halted = true
+        result = `${state.timer} 초만에 승리하셨습니다.`
+      }
       return {
         ...state,
-        tableData
+        tableData,
+        opendCount: state.opendCount + openedCount,
+        halted,
+        result
       }
     }
     case CLICK_MINE: {
@@ -177,6 +206,12 @@ const reducer = (state, action) => {
           tableData,
         };
       }
+    case INCREMENT_TIMER: {
+      return{
+        ...state,
+        timer: state.timer + 1
+      }
+    }
     default:
         return state
   }
@@ -187,6 +222,13 @@ const MineSearch = memo(() => {
   const { timer, result, tableData, halted } = state
   const value = useMemo(() => ({tableData, dispatch, halted}), [tableData, halted])
   
+  useEffect(() => {
+  let timer
+  if (halted === false){
+    timer = setInterval(() => {dispatch({type: INCREMENT_TIMER})}, 1000)
+  }
+  return () => { clearInterval(timer) }
+  }, [halted, timer ])
   return(
     <TableContext.Provider value={value}>
       <Form />
