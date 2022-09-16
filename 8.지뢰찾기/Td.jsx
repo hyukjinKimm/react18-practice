@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useContext } from "react";
+import React, { memo, useCallback, useContext, useMemo } from "react";
 import { CLICK_MINE, CODE, FLAG_CELL, NORMALIZE_CELL, OPEN_CELL, QUESTION_CELL, TableContext } from './MineSearch';
 
 const Td = memo(({ rowIndex, cellIndex }) => {
@@ -33,6 +33,7 @@ const Td = memo(({ rowIndex, cellIndex }) => {
   };
   
   const getTdText = (code) => {
+    console.log('getTdText ')
     switch (code) {
       case CODE.NORMAL:
         return '';
@@ -96,7 +97,7 @@ const Td = memo(({ rowIndex, cellIndex }) => {
         return;
     }
   }, [tableData[rowIndex][cellIndex], halted]);
-  return(
+  return useMemo(() => (
     <React.Fragment>
       <td 
         style={getTdStyle(tableData[rowIndex][cellIndex])}
@@ -104,6 +105,6 @@ const Td = memo(({ rowIndex, cellIndex }) => {
         onContextMenu={onRightClickTd}
       >{getTdText(tableData[rowIndex][cellIndex])}</td>
     </React.Fragment>
-  )
+  ), [tableData[rowIndex][cellIndex]])
 })
 export default Td
